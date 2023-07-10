@@ -1,16 +1,19 @@
 #include "PacketUartImpl.h"
-#include <HardwareSerial.h>
+
 #include <algorithm>
+
+namespace embedded
+{
 
 static_assert(sizeof(HardwareSerial) == sizeof(PacketUart::UartDevice));
 static_assert(std::is_convertible_v<PacketUart::UartDevice, HardwareSerial>);;
 
-PacketUart::PacketUart(UartDevice& uart) : uartDevice(uart)
+PacketUart::PacketUart(UartDevice &uart) : uartDevice(uart)
 {
 
 }
 
-uint16_t PacketUart::Receive(uint8_t *buffer, uint16_t bufferSize, uint16_t timeout)
+uint16_t PacketUart::Receive(uint8_t* buffer, uint16_t bufferSize, uint16_t timeout)
 {
     auto startTime = millis();
     auto maxTime = startTime + timeout;
@@ -30,7 +33,7 @@ uint16_t PacketUart::Receive(uint8_t *buffer, uint16_t bufferSize, uint16_t time
     return currentPos;
 }
 
-uint16_t PacketUart::Send(const uint8_t *buffer, uint16_t bufferSize, uint32_t timeoutMilliseconds) const
+uint16_t PacketUart::Send(const uint8_t* buffer, uint16_t bufferSize, uint32_t timeoutMilliseconds) const
 {
     auto oldTimeout = uartDevice.getTimeout();
     if (timeoutMilliseconds > 0)
@@ -43,7 +46,7 @@ uint16_t PacketUart::Send(const uint8_t *buffer, uint16_t bufferSize, uint32_t t
     return result;
 }
 
-uint16_t PacketUart::ReceiveUntil(uint8_t *buffer, uint16_t bufferSize, uint8_t endByte, uint16_t timeoutMilliseconds)
+uint16_t PacketUart::ReceiveUntil(uint8_t* buffer, uint16_t bufferSize, uint8_t endByte, uint16_t timeoutMilliseconds)
 {
     uint16_t currentPos = 0;
     auto oldTimeout = uartDevice.getTimeout();
@@ -66,4 +69,6 @@ uint16_t PacketUart::ReceiveUntil(uint8_t *buffer, uint16_t bufferSize, uint8_t 
     }
     uartDevice.setTimeout(oldTimeout);
     return currentPos;
+}
+
 }
