@@ -1,4 +1,5 @@
 #include <charconv>
+#include <cstdlib>
 #include "BufferedOut.h"
 
 namespace
