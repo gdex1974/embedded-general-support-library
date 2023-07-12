@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstddef>
 #include <array>
 
 namespace embedded
@@ -17,8 +18,8 @@ public:
     typedef typename std::add_const<typename std::remove_const<T>::type>::type &const_reference;
     typedef pointer iterator;
     typedef const_pointer const_iterator;
-    typedef size_t size_type;
-    typedef ptrdiff_t difference_type;
+    typedef std::size_t size_type;
+    typedef std::ptrdiff_t difference_type;
 
     MemoryView() : begin_(nullptr), size_(0) {}
     MemoryView(T* p, uint16_t s) : begin_(p), size_(s) {}
