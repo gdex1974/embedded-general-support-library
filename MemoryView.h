@@ -27,6 +27,9 @@ public:
     template<std::size_t N>
     MemoryView(std::array<T, N> &ar) : begin_(ar.begin()), size_(ar.size()) {}
 
+    template<std::size_t N>
+    MemoryView(T(&ar)[N]) : begin_(ar), size_(N) {}
+
     template<typename C = T, std::enable_if_t<std::is_same_v<char, std::remove_const_t<C>>, bool> = true>
     operator std::string_view() const
     {

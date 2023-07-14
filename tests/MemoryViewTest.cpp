@@ -20,13 +20,22 @@ EXPECT_EQ(view.begin(), data);
 EXPECT_EQ(view.end(), data + sizeof(data));
 }
 
+TEST(MemoryViewTest, ArraySizeDeduction)
+{
+    char data[] = { 0x01, 0x02, 0x03 };
+    MemoryView view { data };
+    EXPECT_EQ(view.size(), 3);
+    EXPECT_EQ(view.begin(), data);
+    EXPECT_EQ(view.end(), data + sizeof(data));
+}
+
 TEST(MemoryViewTest, OperatorStringView)
 {
 ASSERT_FALSE((std::is_convertible_v<MemoryView<uint8_t>, std::string_view>));
 ASSERT_TRUE((std::is_convertible_v<MemoryView<char>, std::string_view>));
 ASSERT_TRUE((std::is_convertible_v<MemoryView<const char>, std::string_view>));
 char data[] = {  'A', '0', '1' };
-MemoryView view { data, sizeof(data) };
+MemoryView view { data };
 std::string_view result = view;
 ASSERT_EQ(result.size(), 3);
 EXPECT_EQ(result, "A01");
