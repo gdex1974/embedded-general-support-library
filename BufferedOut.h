@@ -1,8 +1,8 @@
 #pragma once
 
+#include "MemoryView.h"
 #include <array>
 #include <string_view>
-#include "MemoryView.h"
 
 namespace embedded
 {
@@ -32,7 +32,7 @@ public:
 
     BufferedOut &operator<<(float f);
 
-    BufferedOut &operator<<(BytesView span);
+    BufferedOut &operator<<(ConstBytesView span);
 
     BufferedOut &operator<<(precision p)
     {
@@ -41,14 +41,15 @@ public:
     }
 
     BytesView data() { return { (unsigned char*)(dataBuf.begin()), static_cast<uint16_t>(size()) }; }
+    ConstBytesView data() const { return { (unsigned char*)(dataBuf.begin()), static_cast<uint16_t>(size()) }; }
 
-    explicit operator std::string_view() { return { dataBuf.begin(), size() }; }
+    explicit operator std::string_view() const { return { dataBuf.begin(), size() }; }
 
-    decltype(dataBuf)::size_type size() { return pos - dataBuf.begin(); }
-
-    decltype(dataBuf)::size_type capacity() { return dataBuf.size(); }
+    decltype(dataBuf)::size_type size() const { return pos - dataBuf.begin(); }
+    decltype(dataBuf)::size_type capacity() const { return dataBuf.size(); }
 
     explicit operator uint8_t*() { return (uint8_t*)(dataBuf.begin()); }
+    explicit operator const uint8_t*() const { return (const uint8_t*)(dataBuf.begin()); }
 
     void clear() { pos = dataBuf.begin(); }
 

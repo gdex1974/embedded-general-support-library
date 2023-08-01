@@ -20,6 +20,15 @@ EXPECT_EQ(view.begin(), data);
 EXPECT_EQ(view.end(), data + sizeof(data));
 }
 
+TEST(MemoryViewTest, ConstCopyConstructor)
+{
+    uint8_t data[] = { 0x01, 0x02, 0x03 };
+    embedded::BytesView view { data, sizeof(data) };
+    embedded::ConstBytesView constView = view;
+    EXPECT_EQ(constView.size(), view.size());
+    EXPECT_EQ(constView.begin(), view.begin());
+}
+
 TEST(MemoryViewTest, ArraySizeDeduction)
 {
     char data[] = { 0x01, 0x02, 0x03 };

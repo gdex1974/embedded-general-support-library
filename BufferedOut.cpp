@@ -94,7 +94,7 @@ BufferedOut &BufferedOut::operator<<(float f)
     return *this;
 }
 
-BufferedOut &BufferedOut::operator<<(BytesView span)
+BufferedOut &BufferedOut::operator<<(ConstBytesView span)
 {
     char digits[] = "0123456789ABCDEF";
     const auto availableSize = (dataBuf.end() - pos) / 2;
