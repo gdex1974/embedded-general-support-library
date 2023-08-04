@@ -1,5 +1,5 @@
+#include "graphics/BaseGeometry.h"
 #include <gtest/gtest.h>
-#include "BaseGeometry.h"
 
 using embedded::Size;
 using embedded::Point;

@@ -51,7 +51,11 @@ public:
     explicit operator uint8_t*() { return (uint8_t*)(dataBuf.begin()); }
     explicit operator const uint8_t*() const { return (const uint8_t*)(dataBuf.begin()); }
 
-    void clear() { pos = dataBuf.begin(); }
+    void clear()
+    {
+        pos = dataBuf.begin();
+        floatPrecision = 0;
+    }
 
     void addChar(char c)
     {

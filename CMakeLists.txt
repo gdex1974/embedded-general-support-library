@@ -7,10 +7,16 @@ if ("${COMPONENT_NAME}" STREQUAL "")
             BufferedOut.cpp
             PersistentStorage.cpp
             )
+    add_library(general-support-library-graphics STATIC
+            graphics/EmbeddedFont.cpp
+            graphics/EmbeddedFonts.cpp
+            graphics/Canvas.cpp
+    )
     target_compile_features(general-support-library PUBLIC cxx_std_17)
     target_compile_options(general-support-library PRIVATE -Wall -Wextra -pedantic)
     target_include_directories(general-support-library PUBLIC .)
-
+    target_link_libraries(general-support-library-graphics PUBLIC general-support-library)
+    set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     # Add the gtest library
     find_package(GTest)
     if (GTEST_FOUND)
@@ -21,6 +27,9 @@ else ()
     set(srcs
             BufferedOut.cpp
             PersistentStorage.cpp
+            graphics/EmbeddedFont.cpp
+            graphics/EmbeddedFonts.cpp
+            graphics/Canvas.cpp
             esp32-arduino/Delays.cpp
             esp32-arduino/GpioDigitalPin.cpp
             esp32-arduino/I2CBus.cpp
@@ -31,6 +40,7 @@ else ()
             esp32-arduino/SpiBus.cpp
             esp32-arduino/SpiDevice.cpp
             )
+    set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     set(includedirs
             ${CMAKE_CURRENT_LIST_DIR}
             )
