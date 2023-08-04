@@ -40,7 +40,6 @@ else ()
             esp32-arduino/SpiBus.cpp
             esp32-arduino/SpiDevice.cpp
             )
-    set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     set(includedirs
             ${CMAKE_CURRENT_LIST_DIR}
             )
@@ -48,6 +47,7 @@ else ()
             SRCS ${srcs}
             REQUIRES arduino
             )
+    set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         target_compile_options(${COMPONENT_LIB} PUBLIC -DDEBUG_SERIAL_OUT)
     endif ()
