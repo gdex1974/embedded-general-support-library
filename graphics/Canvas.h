@@ -73,11 +73,11 @@ public:
     void drawFilledRectangle(Rect rect);
     void drawCircle(Point center, int radius, bool filled = false);
 
+    Rect transformCoords(Rect rect) const;
 private:
     void drawHorizontalLine(Point startPos, int width);
     void drawVerticalLine(Point startPos, int height);
     Point transformCoords(Point pos) const;
-    Rect transformCoords(Rect rect) const;
     Matrix getTransformMatrix() const;
     Size getShifts() const;
 
