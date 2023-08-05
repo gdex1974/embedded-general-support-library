@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 #include <array>
 
@@ -18,7 +19,7 @@ struct Size
 
     constexpr Size operator-(Size other) const
     {
-        return { width - other.width, height - other.height };
+        return { T(width - other.width), T(height - other.height) };
     }
 
     constexpr Size operator*(T scale) const
@@ -40,7 +41,7 @@ struct Point
 
     constexpr Point operator+(const Size<T> size) const
     {
-        return Point { x + size.width, y + size.height };
+        return Point { T(x + size.width), T(y + size.height) };
     }
 
     Point &operator+=(const Size<T> &size)
@@ -66,6 +67,15 @@ struct Rect
 {
     Point<T> topLeft;
     Size<T> size;
+
+    Rect() = default;
+    Rect(const Rect<T> &) = default;
+
+    constexpr Rect(Point<T> topLeft, Size<T> size) : topLeft(topLeft), size(size) {}
+
+    template<typename U, std::enable_if_t<std::is_convertible_v<U, T>, bool> = true>
+    constexpr Rect(Rect<U> other) : topLeft { T(other.topLeft.x), T(other.topLeft.y) }, size { T(other.size.width), T(
+            other.size.height) } {}
 
     constexpr Rect operator+(const Size<T> s) const
     {
