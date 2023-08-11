@@ -2,7 +2,12 @@
 
 #include <cstdint>
 
-struct embedded::GpioPinDefinition
+namespace embedded
+{
+
+struct GpioPinDefinition
 {
     uint8_t pin;
 };
+
+}
