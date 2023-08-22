@@ -30,6 +30,7 @@ else ()
             graphics/EmbeddedFont.cpp
             graphics/EmbeddedFonts.cpp
             graphics/Canvas.cpp
+            esp32-arduino/AnalogPin.cpp
             esp32-arduino/Delays.cpp
             esp32-arduino/GpioDigitalPin.cpp
             esp32-arduino/I2CBus.cpp
