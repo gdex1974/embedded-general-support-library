@@ -6,8 +6,7 @@ namespace embedded
 
 bool SpiDevice::sendSync(const uint8_t* data, uint16_t length, uint32_t /*timeout*/) const
 {
-    spiBus.sendBytes(data, length);
-    return true;
+    return spiBus.transfer(data, nullptr, length);
 }
 
 bool SpiDevice::receiveSync(uint8_t* data, uint16_t length, uint32_t /*timeout*/) const

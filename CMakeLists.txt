@@ -30,23 +30,23 @@ else ()
             graphics/EmbeddedFont.cpp
             graphics/EmbeddedFonts.cpp
             graphics/Canvas.cpp
-            esp32-arduino/AnalogPin.cpp
-            esp32-arduino/Delays.cpp
-            esp32-arduino/GpioDigitalPin.cpp
-            esp32-arduino/I2CBus.cpp
-            esp32-arduino/I2CDevice.cpp
-            esp32-arduino/PacketUart.cpp
-            esp32-arduino/SerialDebug.cpp
-            esp32-arduino/SerialOut.cpp
-            esp32-arduino/SpiBus.cpp
-            esp32-arduino/SpiDevice.cpp
+            esp32-esp-idf/AnalogPin.cpp
+            esp32-esp-idf/Delays.cpp
+            esp32-esp-idf/GpioDigitalPin.cpp
+            esp32-esp-idf/I2CBus.cpp
+            esp32-esp-idf/I2CDevice.cpp
+            esp32-esp-idf/PacketUart.cpp
+            esp32-esp-idf/SerialDebug.cpp
+            esp32-esp-idf/SerialOut.cpp
+            esp32-esp-idf/SimpleUartDevice.cpp
+            esp32-esp-idf/SpiBus.cpp
+            esp32-esp-idf/SpiDevice.cpp
             )
     set(includedirs
             ${CMAKE_CURRENT_LIST_DIR}
             )
     idf_component_register(INCLUDE_DIRS ${includedirs}
             SRCS ${srcs}
-            REQUIRES arduino
             )
     set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
