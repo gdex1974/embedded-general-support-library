@@ -1,10 +1,12 @@
 #ifdef DEBUG_SERIAL_OUT
 #include "SerialOut.h"
+#include "PacketUart.h"
 #include "PacketUartImpl.h"
 
 namespace
 {
-    embedded::PacketUart uart1(static_cast<embedded::PacketUart::UartDevice&>(Serial));
+    embedded::PacketUart::UartDevice uartDevice(0);
+    embedded::PacketUart uart1(uartDevice);
     std::array<char, 128> serialBuffer;
 }
 namespace embedded
