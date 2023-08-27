@@ -21,10 +21,19 @@ bool GpioDigitalPin::check() const
     return digitalRead(gpioPin.pin) != 0;
 }
 
-void GpioDigitalPin::init(GpioDigitalPin::Direction type) const
+bool GpioDigitalPin::init(GpioDigitalPin::Direction type, GpioDigitalPin::PullMode mode) const
 {
-    pinMode(gpioPin.pin, type == Direction::Input ? INPUT : OUTPUT);
-
+    uint8_t pinType = type == Direction::Input ? INPUT : OUTPUT;
+    if (mode == PullMode::Up)
+    {
+        pinType |= PULLUP;
+    }
+    else if (mode == PullMode::Down)
+    {
+        pinType |= PULLDOWN;
+    }
+    pinMode(gpioPin.pin, pinType);
+    return true;
 }
 
 }
