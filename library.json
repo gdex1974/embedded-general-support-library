@@ -15,7 +15,7 @@
   "build": {
     "includeDir": ".",
     "srcDir": ".",
-    "build_src_filter": "+BufferedOut.cpp +PersistentStorage.cpp +graphics/*.cpp +esp32-arduino/*.cpp",
+    "build_src_filter": "+BufferedOut.cpp +PersistentStorage.cpp +graphics/*.cpp +arduino/*.cpp",
     "build_flags": "-D DEBUG_SERIAL_OUT"
   }
 }

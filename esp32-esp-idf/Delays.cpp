@@ -3,26 +3,6 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/portmacro.h>
-#include <esp_sleep.h>
-
-void embedded::ligntSleep(uint32_t milliseconds)
-{
-    uint32_t tickstart = getMillisecondTicks();
-    uint32_t wait = tickstart + milliseconds;
-
-    while ((getMillisecondTicks() < wait))
-    {
-        esp_sleep_enable_timer_wakeup((wait - getMillisecondTicks()) * 1000);
-        if (esp_light_sleep_start() != ESP_OK)
-        {
-            auto current = getMillisecondTicks();
-            if (wait > current)
-            {
-                delay(wait - current);
-            }
-        }
-    }
-}
 
 void embedded::delay(uint32_t milliseconds)
 {
@@ -45,12 +25,6 @@ void embedded::delayMicroseconds(uint32_t microseconds)
         }
         while(static_cast<uint64_t>(esp_timer_get_time()) < expected);
     }
-}
-
-void embedded::deepSleep(uint32_t milliseconds)
-{
-    esp_sleep_enable_timer_wakeup(milliseconds * 1000ull);
-    esp_deep_sleep_start();
 }
 
 uint64_t embedded::getMicrosecondTicks()
