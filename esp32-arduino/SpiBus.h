@@ -1,8 +1,7 @@
 #pragma once
 
-#include "SPI.h"
-#include "wiring_private.h"
-#include <esp32-hal-spi.h>
+#include <Arduino.h>
+#include <SPI.h>
 
 namespace embedded
 {

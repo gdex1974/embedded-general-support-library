@@ -1,6 +1,6 @@
 #include "../AnalogPin.h"
 #include "GpioPinDefinition.h"
-#include "esp32-hal-adc.h"
+#include "Arduino.h"
 
 int embedded::AnalogPin::singleRead() const
 {

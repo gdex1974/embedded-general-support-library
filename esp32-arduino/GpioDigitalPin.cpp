@@ -1,7 +1,7 @@
 #include "../GpioDigitalPin.h"
 
 #include "GpioPinDefinition.h"
-#include "esp32-hal-gpio.h"
+#include <Arduino.h>
 
 namespace embedded
 {
