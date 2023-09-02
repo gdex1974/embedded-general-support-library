@@ -1,9 +1,6 @@
 #include "Delays.h"
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/portmacro.h>
-#include <esp_sleep.h>
+#include <Arduino.h>
 
 void embedded::ligntSleep(uint32_t milliseconds)
 {
@@ -26,25 +23,17 @@ void embedded::ligntSleep(uint32_t milliseconds)
 
 void embedded::delay(uint32_t milliseconds)
 {
-    vTaskDelay(milliseconds / portTICK_PERIOD_MS);
+    ::delay(milliseconds);
 }
 
 uint32_t embedded::getMillisecondTicks()
 {
-    return esp_timer_get_time() / 1000;
+    return ::millis();
 }
 
 void embedded::delayMicroseconds(uint32_t microseconds)
 {
-    if (microseconds){
-        auto current = static_cast<uint64_t>(esp_timer_get_time());
-        uint64_t expected = current + microseconds;
-        if (expected < current)
-        {
-            while(static_cast<uint64_t>(esp_timer_get_time()) > expected);
-        }
-        while(static_cast<uint64_t>(esp_timer_get_time()) < expected);
-    }
+    ::delayMicroseconds(microseconds);
 }
 
 void embedded::deepSleep(uint32_t milliseconds)
@@ -55,5 +44,5 @@ void embedded::deepSleep(uint32_t milliseconds)
 
 uint64_t embedded::getMicrosecondTicks()
 {
-    return static_cast<uint64_t>(esp_timer_get_time());
+    return ::micros();
 }
