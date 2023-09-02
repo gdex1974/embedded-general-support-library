@@ -26,7 +26,7 @@ TEST(PersistentStorageTest, SetAndGetNewObject)
 {
     
     std::array<uint8_t, BufferSize> buffer {};
-    PersistentStorage storage { BytesView { buffer} };
+    PersistentStorage storage { buffer };
 
     TestObj testObject = { 1, 2, 3 };
     std::string_view testIndex = "test";
