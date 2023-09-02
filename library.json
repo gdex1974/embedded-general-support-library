@@ -1,0 +1,21 @@
+{
+  "name": "General Support Library",
+  "version": "1.0.0",
+  "description": "General C++ library for embedded development.",
+  "keywords": "C++17, esp32",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/gdex1974/embedded-general-support-library.git"
+  },
+  "license": "BSD 3-Clause",
+  "homepage": "https://github.com/gdex1974/embedded-general-support-library",
+  "frameworks": "arduino",
+  "platforms": "esp32",
+  "build": {
+    "includeDir": ".",
+    "srcDir": ".",
+    "build_src_filter": "+BufferedOut.cpp +PersistentStorage.cpp +graphics/*.cpp +esp32-arduino/*.cpp",
+    "build_flags": "-D DEBUG_SERIAL_OUT"
+  }
+}
