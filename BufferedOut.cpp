@@ -97,9 +97,9 @@ BufferedOut &BufferedOut::operator<<(float f)
 BufferedOut &BufferedOut::operator<<(ConstBytesView span)
 {
     char digits[] = "0123456789ABCDEF";
-    const auto availableSize = (dataBuf.end() - pos) / 2;
+    const size_t availableSize = (dataBuf.end() - pos) / 2;
     auto size = span.size() < availableSize ? span.size() : availableSize;
-    for (int i = 0; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
     {
         unsigned digit = span[i];
         *(pos++) = digits[(digit & 0xF0u) >> 4];
