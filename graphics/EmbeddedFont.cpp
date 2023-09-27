@@ -11,9 +11,14 @@ EmbeddedFont::CharacterBitmap EmbeddedFont::getBitmap(const char symbol) const
         return getBitmap(fontDescriptor.first);
     }
     auto pos = symbol - fontDescriptor.first;
+    if (symbol > '~')
+    {
+        pos -= (0xA0 - '~' - 1);
+    }
+
     if (pos >= fontDescriptor.glyph.size())
     {
-        return getBitmap(pos + fontDescriptor.glyph.size() - 1);
+        return getBitmap(fontDescriptor.first);
     }
     const auto &glyph = fontDescriptor.glyph[pos];
     const auto bitmapBegin = fontDescriptor.bitmap.begin() + glyph.bitmapOffset;
