@@ -1,5 +1,6 @@
 #include <charconv>
 #include <cstdlib>
+#include <cstring>
 #include "BufferedOut.h"
 
 namespace
@@ -39,6 +40,22 @@ char* append(char* dst, const char* end, const char* str)
 namespace embedded
 {
 
+void BufferedOut::addPadding(const char* p)
+{
+    auto realSize = p - pos;
+    if (realSize < integerWidth)
+    {
+        memmove(pos + integerWidth - realSize, pos, realSize);
+        auto paddingSize = integerWidth - realSize;
+        auto paddingPos = pos;
+        while (paddingSize-- > 0)
+        {
+            *(paddingPos++) = fillChar;
+        }
+        pos += integerWidth;
+    }
+}
+
 BufferedOut &BufferedOut::operator<<(const char* str)
 {
     pos = append(pos, dataBuf.end(), str);
@@ -49,43 +66,74 @@ BufferedOut &BufferedOut::operator<<(const char* str)
 BufferedOut &BufferedOut::operator<<(int n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
 }
 
 BufferedOut &BufferedOut::operator<<(unsigned int n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
 }
 
 BufferedOut &BufferedOut::operator<<(long n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
 }
 
 BufferedOut &BufferedOut::operator<<(unsigned long n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
 }
 
 BufferedOut &BufferedOut::operator<<(long long n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
 }
 
 BufferedOut &BufferedOut::operator<<(unsigned long long n)
 {
     auto [p, ec] = std::to_chars(pos, dataBuf.end(), n);
-    pos = p;
+    if (ec == std::errc {})
+    {
+        adjustPos(p);
+    }
     return *this;
+}
+
+void BufferedOut::adjustPos(char* p)
+{
+    if (integerWidth > 0)
+    {
+        addPadding(p);
+        integerWidth = 0;
+    }
+    else
+    {
+        pos = p;
+    }
 }
 
 BufferedOut &BufferedOut::operator<<(float f)
@@ -96,15 +144,28 @@ BufferedOut &BufferedOut::operator<<(float f)
 
 BufferedOut &BufferedOut::operator<<(ConstBytesView span)
 {
-    char digits[] = "0123456789ABCDEF";
-    const auto availableSize = (dataBuf.end() - pos) / 2;
+    const size_t availableSize = (dataBuf.end() - pos) / 2;
     auto size = span.size() < availableSize ? span.size() : availableSize;
-    for (int i = 0; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
     {
-        unsigned digit = span[i];
-        *(pos++) = digits[(digit & 0xF0u) >> 4];
-        *(pos++) = digits[digit & 0xFu];
+        *this << span[i];
     }
+    return *this;
+}
+
+BufferedOut &BufferedOut::operator<<(unsigned char b)
+{
+    char digits[] = "0123456789ABCDEF";
+    *(pos++) = digits[(b & 0xF0u) >> 4];
+    *(pos++) = digits[b & 0xFu];
+    return *this;
+}
+
+BufferedOut &BufferedOut::operator<<(std::string_view str)
+{
+    auto effectiveSize = std::min(str.size(), static_cast<size_t>(dataBuf.end() - pos));
+    std::memcpy(pos, str.data(), effectiveSize);
+    pos += effectiveSize;
     return *this;
 }
 
