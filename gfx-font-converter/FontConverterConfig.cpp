@@ -32,7 +32,7 @@ FontConverterConfig::FontConverterConfig(int argc, char** argv)
                 break;
         }
     }
-    std::transform(encoding.begin(), encoding.end(), encoding.begin(), std::toupper);
+    std::transform(encoding.cbegin(), encoding.cend(), encoding.begin(), std::toupper);
     if (encoding == "ASCII")
     {
         lastChar = '~';
