@@ -17,7 +17,13 @@ if ("${COMPONENT_NAME}" STREQUAL "")
     target_include_directories(general-support-library PUBLIC .)
     target_link_libraries(general-support-library-graphics PUBLIC general-support-library)
     set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
-    # Add the gtest library
+
+    find_package(Freetype)
+    find_package(Iconv)
+    if (FREETYPE_FOUND AND ICONV_FOUND)
+        add_subdirectory(gfx-font-converter)
+    endif ()
+
     find_package(GTest)
     if (GTEST_FOUND)
         enable_testing()

@@ -20,8 +20,8 @@ struct FontDescriptor
 {
     embedded::ConstBytesView bitmap;
     embedded::MemoryView<const GlyphDescriptor> glyph;
-    uint16_t first{};
-    uint16_t last{};
+    uint8_t first{};
+    uint8_t last{};
     uint8_t verticalShift{};
 };
 
