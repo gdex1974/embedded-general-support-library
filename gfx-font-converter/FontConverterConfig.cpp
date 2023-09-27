@@ -1,6 +1,7 @@
 #include "FontConverterConfig.h"
 
 #include <getopt.h>
+#include <cctype>
 #include <algorithm>
 
 FontConverterConfig::FontConverterConfig(int argc, char** argv)
