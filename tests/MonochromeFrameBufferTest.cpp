@@ -1,5 +1,5 @@
 #include "graphics/Canvas.h"
-#include "graphics/EmbeddedFonfs.h"
+#include "graphics/EmbeddedFonts.h"
 #include "PBMHelper.h"
 #include "graphics/SimpleFrameBuffer.h"
 #include <gtest/gtest.h>

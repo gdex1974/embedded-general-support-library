@@ -52,8 +52,8 @@ void BufferedOut::addPadding(const char* p)
         {
             *(paddingPos++) = fillChar;
         }
-        pos += integerWidth;
     }
+    pos += integerWidth;
 }
 
 BufferedOut &BufferedOut::operator<<(const char* str)

@@ -86,12 +86,12 @@ public:
 
 private:
     void addPadding(const char* p);
+    void adjustPos(char* p);
 
     decltype(dataBuf)::iterator pos;
     int floatPrecision;
     int integerWidth;
     char fillChar;
-    void adjustPos(char* p);
 };
 
 }

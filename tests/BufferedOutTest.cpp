@@ -72,6 +72,15 @@ TEST(BufferedOutTest, FillWidth) {
     EXPECT_EQ(std::string(out.data().begin(), out.data().end()), "000042");
 }
 
+TEST(BufferedOutTest, FillWidthCombined)
+{
+    std::array<char, 20> string {};
+    embedded::BufferedOut bufferedOut(string);
+    bufferedOut << embedded::BufferedOut::fill{'0'} << embedded::BufferedOut::width {2}
+                << 11 << ":"<< embedded::BufferedOut::width {2} << 4;
+    EXPECT_EQ(bufferedOut.asStringView(), "11:04");
+}
+
 TEST(BufferedOutTest, Size) {
     BufferedOut out(buffer);
     out << "Hello";
