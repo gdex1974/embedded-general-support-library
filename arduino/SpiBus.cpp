@@ -20,7 +20,7 @@ namespace
             default:
             {
                 const auto dwords = size / 4;
-                spi.transferBytes(nullptr, out, dwords);
+                spi.transferBytes(nullptr, out, dwords * 4);
                 if (uint16_t rest = size % 4)
                 {
                     read(spi, out + dwords * 4, rest);
@@ -47,7 +47,7 @@ namespace
             default:
             {
                 const auto dwords = size / 4;
-                spi.transferBytes(in, nullptr, dwords);
+                spi.transferBytes(in, nullptr, dwords * 4);
                 if (uint16_t rest = size % 4)
                 {
                     write(spi, in + dwords * 4, rest);
@@ -75,7 +75,7 @@ namespace
             default:
             {
                 const auto dwords = size / 4;
-                spi.transferBytes(in, out, dwords);
+                spi.transferBytes(in, out, dwords * 4);
                 if (uint16_t rest = size % 4)
                 {
                     readAndWrite(spi, in + dwords * 4, out + dwords * 4, rest);
