@@ -28,8 +28,8 @@ EmbeddedFont::CharacterBitmap EmbeddedFont::getBitmap(const char symbol) const
                            fontDescriptor.bitmap.begin() + fontDescriptor.glyph[pos].bitmapOffset;
     return EmbeddedFont::CharacterBitmap { .bitmap { bitmapBegin, static_cast<uint16_t>(bitmapEnd - bitmapBegin) },
                                            .effectiveSize = glyph.size,
-                                           .fullSize { glyph.shift, fontDescriptor.verticalShift },
-                                           .offset = glyph.offset };
+                                           .offset = glyph.offset,
+                                           .width = glyph.shift };
 }
 
 Rect<int> EmbeddedFont::getTextBounds(std::string_view view) const
@@ -49,7 +49,7 @@ Rect<int> EmbeddedFont::getTextBounds(std::string_view view) const
             }
             else
             {
-                result.size.width += (i < view.size() - 1) ? bitmap.fullSize.width : bitmap.effectiveSize.width;
+                result.size.width += (i < view.size() - 1) ? bitmap.width : bitmap.effectiveSize.width;
             }
             maxBottom = std::max(maxBottom, (int)bitmap.offset.height + bitmap.effectiveSize.height);
             minTop = std::min(minTop, (int)bitmap.offset.height);

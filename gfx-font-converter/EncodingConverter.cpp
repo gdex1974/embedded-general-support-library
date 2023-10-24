@@ -41,3 +41,28 @@ std::string EncodingConverter::convert(char symbol) {
     }
     return {outBuf, sizeof(outBuf) - outBytesLeft};
 }
+
+uint32_t EncodingConverter::convertRaw(char symbol) {
+    buf[inSize] = symbol;
+    size_t inBufSize = 1 + inSize;
+    union {
+        char buf[4];
+        uint32_t result;
+    } outBuf = {};
+    size_t outBytesLeft = sizeof(outBuf);
+    char *inptr = &buf[0];
+    char *outptr = &outBuf.buf[0];
+    if(iconv(descriptor, &inptr, &inBufSize, &outptr, &outBytesLeft) == (size_t) -1)
+    {
+        if (errno == EINVAL)
+        {
+            inSize = (inSize + 1) % 3;
+        }
+        else
+        {
+            inSize = 0;
+        }
+        return {};
+    }
+    return outBuf.result;
+}

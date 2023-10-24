@@ -14,8 +14,8 @@ public:
     {
         embedded::ConstBytesView bitmap;
         embedded::Size<uint8_t> effectiveSize;
-        embedded::Size<uint8_t> fullSize;
         embedded::Size<int8_t> offset;
+        uint8_t width;
     };
     explicit EmbeddedFont(const FontDescriptor& descriptor) :
         fontDescriptor(descriptor) {}

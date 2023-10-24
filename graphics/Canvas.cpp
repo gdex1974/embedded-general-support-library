@@ -25,7 +25,7 @@ int Canvas::drawCharAt(Point pos, const char ascii_char, const embedded::fonts::
             }
         }
     }
-    return glyph.fullSize.width;
+    return glyph.width;
 }
 
 void Canvas::drawLine(Point start, Point end)
