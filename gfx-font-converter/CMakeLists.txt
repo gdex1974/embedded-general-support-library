@@ -2,6 +2,12 @@ add_executable(gfx-font-converter
         main.cpp
         FontConverterConfig.cpp
         EncodingConverter.cpp
+        FreeTypeLibrary.cpp
+        FreeTypeLibrary.h
+        FreeTypeFace.cpp
+        FreeTypeFace.h
+        FreeTypeGlyph.cpp
+        FreeTypeGlyph.h
 )
 target_link_libraries(gfx-font-converter
         PRIVATE
