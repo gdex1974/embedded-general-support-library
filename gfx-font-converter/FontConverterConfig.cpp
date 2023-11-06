@@ -8,7 +8,7 @@ FontConverterConfig::FontConverterConfig(int argc, char** argv)
 {
     int opt;
     encoding = "ASCII";
-    while ((opt = getopt(argc, argv, "f:o:d:s:l:e:h")) != -1)
+    while ((opt = getopt(argc, argv, "f:o:d:s:e:bh")) != -1)
     {
         switch (opt)
         {
@@ -26,6 +26,9 @@ FontConverterConfig::FontConverterConfig(int argc, char** argv)
                 break;
             case 'e':
                 encoding = optarg;
+                break;
+            case 'b':
+                format = Format::Binary;
                 break;
             case 'h':
             default:

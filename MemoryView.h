@@ -28,6 +28,7 @@ public:
 
     constexpr MemoryView() : begin_(nullptr), size_(0) {}
     constexpr MemoryView(T* p, size_type s) : begin_(p), size_(s) {}
+    constexpr MemoryView(T* begin, T* end) : begin_(begin), size_(end - begin) {}
 
     template<typename C = std::remove_const<T>, std::enable_if_t<
             std::is_same_v<T, std::add_const_t<C>> || std::is_same_v<T, C>, bool> = true>
