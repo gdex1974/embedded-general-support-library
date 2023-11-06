@@ -7,6 +7,7 @@ class FontConverterConfig
 {
 public:
     enum class Format { Header, Binary};
+
     FontConverterConfig(int argc, char * argv[]);
     const std::string& getFontFileName() const { return fontFileName; }
     const std::string& getOutputFileName() const { return outputFileName; }
