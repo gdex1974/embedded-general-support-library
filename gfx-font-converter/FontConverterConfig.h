@@ -9,7 +9,7 @@ public:
     enum class Format { Header, Binary};
     FontConverterConfig(int argc, char * argv[]);
     const std::string& getFontFileName() const { return fontFileName; }
-    const std::string& getOutputFileName() const { return outputFileName; }
+    const std::string& getOutputDirectory() const { return outputDirectory; }
     const std::string& getEncoding() const { return encoding; }
     int getDPI() const { return DPI; }
     int getFontSize() const { return fontSize; }
@@ -19,7 +19,7 @@ public:
     bool getPrintHelp() const { return printHelp; }
 private:
     std::string fontFileName;
-    std::string outputFileName;
+    std::string outputDirectory;
     std::string encoding;
     int DPI = 141;
     int fontSize = 12;

@@ -10,7 +10,10 @@ And there is nothing between.
 
 Here, I started to fill this gap with the class library for the common embedded developers' tasks I faced in my own projects.
 Also, it contains a common hardware interface (SPI, I2C, UART, RTC, etc) mapped to the framework-specific implementations.
-Currently, ESP-IDF is supported, and the root CMake file is fully integrated into its native build system. The STM32-specific version is under development. And to make the transition fluent there is also an Arduino-based backend integrated with PlatformIO.
+Currently, there are three ways to use library:
+- ESP-IDF framework, can be imported as a component. The CMake file is fully integrated into its native build system.
+- PlatformIO framework (Arduino backend). The library.json file is provided, so it can be imported as a library in the PlatformIO projects.
+- A standalone CMake project. The CMakeLists.txt can be used as a standalone CMake project, the tests are provided in this way.
 
 ## The main concepts
 
@@ -79,22 +82,38 @@ EXPECT_EQ(*retrievedObject, testObject);
 This library contains various graphics primitives, fonts and frame buffer.
 See the [Readme](graphics/Readme.md) for details.
 
+## GFX Font Converter
+
+This is a console utility to convert the font from the TTF format to the GFX format used by the graphics library.
+For the 7 bit (ASCII) charset it's compatible with the Adafruit GFX library.
+For the 8 bit charset it's possible to specify the codepage to map one-byte character codes to the Unicode code points for rendering.
+The non-printable codes between 0X7E and 0XA0 are omitted to save space.
+Another difference is to create two binary files instead of C++ generated code. One for the font itself and another for the glyph metrics.
+The utility is written in C++ and uses FreeType library to render the glyphs.
+The suppported command line options are:
+- -f, --font - the path to the TTF font file
+- -s, --size - the output font size in points
+- -d, --dpi - the output font resolution in DPI, default 141
+- -e, --encoding - charset to use, default is ASCII (7-bit)
+- -b - use binary format for the font data (default is generated C++ header)
+- -o, --output - the output directory, default the executable's one.
+
 ## Hardware-independent interfaces
 
 The library contains the hardware-independent interfaces for the common hardware:
 - SpiDevice
-  - sendSync() - half-duplex send
-  - receiveSync() - half-duplex receive
-  - sendAndReceive() - full-duplex send and receive
+  - sendSync() - half-duplex blocking send
+  - receiveSync() - half-duplex blocking receive
+  - sendAndReceive() - full-duplex blocking send and receive
 - I2CDevice
-  - sendSync() - send
-  - receiveSync() - receive
+  - sendSync() - blocking send with timeout
+  - receiveSync() - blocking receive with timeout
 - PacketUart
-  - sendSync() - send
-  - receiveSync() - receive
-  - receiveUntil() - receive until the specified byte is received
-  - receiveBetween() - receive a packet betwiin specified start and stop bytes
+  - sendSync() - blocking send with timeout
+  - receiveSync() - blocking receive with timeout
+  - receiveUntil() - blocking receive until the specified byte is received or timeout happened
+  - receiveBetween() - blocking receive a packet between specified start and stop bytes, which are included in the result
 
 ## Hardware-specific implementations
 
-Currencly Arduino and ESP-IDF frameworks are supported.
+Currently, ESP32 and generic Arduino are supported. STM32 native implementation is under development.

@@ -3,7 +3,7 @@
   "name": "General Support Library",
   "version": "1.0.0",
   "description": "General C++ library for embedded development.",
-  "keywords": "C++17, esp32",
+  "keywords": "C++17, esp32, graphics, fonts",
   "repository":
   {
     "type": "git",

@@ -259,7 +259,7 @@ int main(int argc, char* argv[])
     if (config.getPrintHelp() || fontFileName.empty())
     {
         std::cout << "Usage: " << std::filesystem::path(argv[0]).filename().string()
-                  << " -f fontfile [-o outputfile] [-d DPI] [-s size] [-l last char] [-e 8-bit codepage, default ISO-8859-1] [-h]"
+                  << " -f fontfile [-o outputfile] [-d DPI] [-s size] [-e 8-bit codepage, default ISO-8859-1] [-b] [-h]"
                   << std::endl;
         return 1;
     }
@@ -271,7 +271,8 @@ int main(int argc, char* argv[])
                 fontName =
                 fontFilePath.filename().replace_extension("").string() + std::to_string(config.getFontSize()) + "pt" +
                 std::to_string(config.getLastChar() > 127 ? 8 : 7) + "b";
-        auto outputDir = std::filesystem::path(argv[0]).parent_path();
+        auto outputDir = std::filesystem::is_directory(config.getOutputDirectory()) ?
+                         std::filesystem::path(config.getOutputDirectory()) : std::filesystem::path(argv[0]).parent_path();
 
         const auto dpi = config.getDPI();
         const FT_F26Dot6 fontSize = config.getFontSize() << 6;

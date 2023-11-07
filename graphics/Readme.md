@@ -45,29 +45,13 @@ It provides the following operations:
 
 ## EmbeddedFonts(.h/.cpp)
 
-As an entry point for fonts used in application it declare and define a set of `EmbeddedFont` objects.
-EmbeddedFonts.cpp contains a template for adding new fonts.
+For the fonts converted to the C++ headers used in application it declares and define a set of `EmbeddedFont` objects.
+EmbeddedFonts.cpp contains an example font definition and can be used as a template for adding new fonts.
 It maps the GFX font definition files to `EmbeddedFont` objects.
 The font definition files are located in `GFXFonts` directory. Initially it contains the following fonts:
 * `FreeSans15pt7b`
 
-The default font converter from Adafruit as well as online services available create a font file definition
-with the C-style type casting of arrays. Instead, the adapter classes expect arrays for size deduction.
-So you could modify the converter of just manually remove the castings like this:
-```c++
-// Original
-const GFXfont FreeSans15pt7b PROGMEM = {
-(uint8_t  *)FreeSans15pt7bBitmaps,
-(GFXglyph *)FreeSans15pt7bGlyphs,
-0x20, 0x7E, 35 };
-  
-// Modified
-const GFXfont FreeSans15pt7b PROGMEM = {
-FreeSans15pt7bBitmaps,
-FreeSans15pt7bGlyphs,
-0x20, 0x7E, 35 };
-```
-
 ## GFXFontsAdapter.h
 
 Contains font and glyph adapters for GFX-compatible fonts.
+It can be initialized from the embedded binary data or with the arrays from the generated C++ header
