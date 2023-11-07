@@ -16,7 +16,7 @@ FontConverterConfig::FontConverterConfig(int argc, char** argv)
                 fontFileName = optarg;
                 break;
             case 'o':
-                outputFileName = optarg;
+                outputDirectory = optarg;
                 break;
             case 'd':
                 DPI = std::stoi(optarg);
