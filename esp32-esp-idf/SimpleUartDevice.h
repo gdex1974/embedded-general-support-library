@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <hal/uart_types.h>
 
 namespace embedded
 {
@@ -42,7 +43,7 @@ public:
     int receiveBlocking(uint8_t* data, std::size_t size, uint32_t timeoutMilliseconds = 20) const;
 
 private:
-    int uartNum;
+    uart_port_t uartNum;
 };
 
 } // embedded
