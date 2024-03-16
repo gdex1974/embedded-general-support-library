@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <hal/i2c_types.h>
 
 namespace embedded
 {
@@ -11,7 +12,7 @@ struct I2CBus
     bool init(int sdaPin, int sclPin, uint32_t frequency, bool pullupSda = true, bool pullupScl = true) const;
     void resetBus() const;
 
-    int bus;
+    i2c_port_t bus;
 };
 
 }

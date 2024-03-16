@@ -51,8 +51,13 @@ else ()
     set(includedirs
             ${CMAKE_CURRENT_LIST_DIR}
             )
+    set(private_requirements)
+    if (IDF_VERSION_MAJOR GREATER 4)
+        list(APPEND private_requirements esp_adc driver esp_timer)
+    endif ()
     idf_component_register(INCLUDE_DIRS ${includedirs}
             SRCS ${srcs}
+            PRIV_REQUIRES ${private_requirements}
             )
     set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
