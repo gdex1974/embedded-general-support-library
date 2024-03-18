@@ -1,4 +1,5 @@
 #include "SimpleUartDevice.h"
+#include <hal/uart_types.h>
 #include <driver/uart.h>
 
 namespace embedded

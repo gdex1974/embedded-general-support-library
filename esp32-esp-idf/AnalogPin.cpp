@@ -31,7 +31,7 @@ int singleReadADC1(int8_t channel)
 {
     int result = -1;
     adc1_config_width(ADC_WIDTH_BIT_12);
-    if (adc1_config_channel_atten((adc1_channel_t)channel, ADC_ATTEN_11db) == ESP_OK)
+    if (adc1_config_channel_atten((adc1_channel_t)channel, ADC_ATTEN_DB_12) == ESP_OK)
     {
         result = adc1_get_raw((adc1_channel_t)channel);
     }
@@ -41,7 +41,7 @@ int singleReadADC1(int8_t channel)
 int singleReadADC2(int8_t channel)
 {
     int result = -1;
-    if (adc2_config_channel_atten((adc2_channel_t)channel, ADC_ATTEN_11db) == ESP_OK)
+    if (adc2_config_channel_atten((adc2_channel_t)channel, ADC_ATTEN_DB_12) == ESP_OK)
     {
         adc2_get_raw((adc2_channel_t)channel, ADC_WIDTH_BIT_12, &result);
     }
@@ -53,7 +53,9 @@ int embedded::AnalogPin::singleRead() const
 {
     auto [adc, channel] = digitalPinToAnalogChannel(gpioPin.pin);
     int result = -1;
+#if __GCC_VERSION__ < 90000
     adc_power_acquire();
+#endif
     switch (adc)
     {
         case 0:
@@ -65,6 +67,8 @@ int embedded::AnalogPin::singleRead() const
         default:
             break;
     };
+#if __GCC_VERSION__ < 90000
     adc_power_release();
+#endif
     return result;
 }

@@ -2,7 +2,12 @@
 
 #include "GpioPinDefinition.h"
 
+#if __GCC_VERSION__ >= 90000
+#include <soc/gpio_num.h>
+#include <esp_clock_output.h>
+#else
 #include <driver/gpio.h>
+#endif
 
 namespace embedded
 {

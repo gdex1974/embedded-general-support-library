@@ -2,6 +2,7 @@
 
 #include "GpioPinDefinition.h"
 
+#include <soc/lldesc.h>
 #include <driver/spi_master.h>
 #include <algorithm>
 
