@@ -44,7 +44,9 @@ bool SimpleUartDevice::init(int uartNumber,
             .flow_ctrl = static_cast<uart_hw_flowcontrol_t>(flowCtrl),
             .rx_flow_ctrl_thresh = static_cast<uint8_t>((flowCtrl == FlowControl::Disable ? 0 : 122)),
             .source_clk = UART_SCLK_APB,
+#if __GNUC__ > 8
             .flags = {}
+#endif
     };
     ESP_ERROR_CHECK(uart_param_config(uartNum, &uartConfig));
     ESP_ERROR_CHECK(uart_set_pin(uartNum, txPin, rxPin, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
