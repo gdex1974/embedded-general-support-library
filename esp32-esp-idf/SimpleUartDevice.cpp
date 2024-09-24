@@ -22,7 +22,7 @@ static_assert((uint8_t)SimpleUartDevice::FlowControl::RTS == UART_HW_FLOWCTRL_RT
 static_assert((uint8_t)SimpleUartDevice::FlowControl::CTS == UART_HW_FLOWCTRL_CTS);
 static_assert((uint8_t)SimpleUartDevice::FlowControl::RTS_CTS == UART_HW_FLOWCTRL_CTS_RTS);
 
-bool SimpleUartDevice::init(int uartNum,
+bool SimpleUartDevice::init(int uartNumber,
                             int rxPin,
                             int txPin,
                             int baudRate,
@@ -31,6 +31,7 @@ bool SimpleUartDevice::init(int uartNum,
                             SimpleUartDevice::StopBits stopBits,
                             SimpleUartDevice::FlowControl flowCtrl)
 {
+    const auto uartNum = static_cast<uart_port_t>(uartNumber);
     if (uart_is_driver_installed(uartNum))
     {
         return true;
@@ -43,6 +44,7 @@ bool SimpleUartDevice::init(int uartNum,
             .flow_ctrl = static_cast<uart_hw_flowcontrol_t>(flowCtrl),
             .rx_flow_ctrl_thresh = static_cast<uint8_t>((flowCtrl == FlowControl::Disable ? 0 : 122)),
             .source_clk = UART_SCLK_APB,
+            .flags = {}
     };
     ESP_ERROR_CHECK(uart_param_config(uartNum, &uartConfig));
     ESP_ERROR_CHECK(uart_set_pin(uartNum, txPin, rxPin, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));

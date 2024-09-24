@@ -53,7 +53,7 @@ int embedded::AnalogPin::singleRead() const
 {
     auto [adc, channel] = digitalPinToAnalogChannel(gpioPin.pin);
     int result = -1;
-#if __GCC_VERSION__ < 90000
+#if __GNUC__ < 9
     adc_power_acquire();
 #endif
     switch (adc)
@@ -67,7 +67,7 @@ int embedded::AnalogPin::singleRead() const
         default:
             break;
     };
-#if __GCC_VERSION__ < 90000
+#if __GNUC__ < 9
     adc_power_release();
 #endif
     return result;
