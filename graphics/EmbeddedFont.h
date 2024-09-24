@@ -17,7 +17,7 @@ public:
         embedded::Size<int8_t> offset;
         uint8_t width;
     };
-    explicit EmbeddedFont(const FontDescriptor& descriptor) :
+    explicit EmbeddedFont(const FontDescriptor& descriptor) noexcept :
         fontDescriptor(descriptor) {}
 
     CharacterBitmap getBitmap(char symbol) const;
