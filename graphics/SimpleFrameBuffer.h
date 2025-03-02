@@ -15,7 +15,7 @@ public:
     int getWidth() const override { return effectiveWidth; }
     int getHeight() const override { return height; }
     embedded::BytesView getImage() override { return buffer; }
-    embedded::ConstBytesView getImage() const override { return { buffer.begin(), bufferSize }; }
+    embedded::ConstBytesView getImage() const override { return { std::begin(buffer), bufferSize }; }
     void clear(uint32_t color) override
     {
         for (int x = 0; x < effectiveWidth; ++x)
