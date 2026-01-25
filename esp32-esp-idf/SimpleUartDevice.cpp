@@ -55,7 +55,7 @@ bool SimpleUartDevice::init(int uartNumber,
 #else
     constexpr int intrAllocFlags = 0;
 #endif
-    ESP_ERROR_CHECK(uart_driver_install(uartNum, UART_FIFO_LEN * 2, 0, 0, nullptr, intrAllocFlags));
+    ESP_ERROR_CHECK(uart_driver_install(uartNum, UART_HW_FIFO_LEN(uartNum) * 2, 0, 0, nullptr, intrAllocFlags));
 
     return true;
 }
