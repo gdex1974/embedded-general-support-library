@@ -21,6 +21,13 @@ public:
         return *this;
     }
 
+
+    SerialOut &operator<<(unsigned char c)
+    {
+        bufferedOut << c;
+        return *this;
+    }
+
     SerialOut &operator<<(int n)
     {
         bufferedOut << n;
@@ -69,7 +76,7 @@ public:
         return *this;
     }
 
-    SerialOut &operator<<(embedded::BytesView span)
+    SerialOut &operator<<(embedded::ConstBytesView span)
     {
         bufferedOut << span;
         return *this;
