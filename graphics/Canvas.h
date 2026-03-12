@@ -19,7 +19,7 @@ public:
     using Size = embedded::Size<int>;
     using Matrix = embedded::Matrix2x2<int>;
 
-    explicit Canvas(FrameBufferBase &frameBuffer)
+    explicit Canvas(FrameBufferBase &frameBuffer) noexcept
     : frameBuffer(frameBuffer)
     , size({frameBuffer.getWidth(), frameBuffer.getHeight()})
     {

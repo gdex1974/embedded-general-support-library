@@ -6,7 +6,7 @@ template<int width, int height, uint8_t colorDepth = 1>
 class SimpleFrameBuffer : public FrameBufferBase
 {
 public:
-    explicit SimpleFrameBuffer()
+    explicit SimpleFrameBuffer() noexcept
     {
         static_assert(colorDepth == 1 || colorDepth == 2 || colorDepth == 4 || colorDepth == 8 || colorDepth == 16 || colorDepth == 24 || colorDepth == 32, "Invalid color depth");
         static_assert(width * (1 << (colorDepth - 1)) % 8 == 0, "Width must be byte-aligned");
@@ -15,7 +15,7 @@ public:
     int getWidth() const override { return effectiveWidth; }
     int getHeight() const override { return height; }
     embedded::BytesView getImage() override { return buffer; }
-    embedded::ConstBytesView getImage() const override { return { buffer.begin(), bufferSize }; }
+    embedded::ConstBytesView getImage() const override { return { std::begin(buffer), bufferSize }; }
     void clear(uint32_t color) override
     {
         for (int x = 0; x < effectiveWidth; ++x)

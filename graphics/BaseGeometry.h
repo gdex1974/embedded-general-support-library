@@ -51,12 +51,12 @@ struct Point
         return *this;
     }
 
-    bool operator==(const Point other) const
+    constexpr bool operator==(const Point other) const
     {
         return x == other.x && y == other.y;
     }
 
-    bool operator!=(const Point other) const
+    constexpr bool operator!=(const Point other) const
     {
         return x != other.x || y != other.y;
     }
@@ -68,8 +68,8 @@ struct Rect
     Point<T> topLeft;
     Size<T> size;
 
-    Rect() = default;
-    Rect(const Rect<T> &) = default;
+    constexpr Rect() = default;
+    constexpr Rect(const Rect<T> &) = default;
 
     constexpr Rect(Point<T> topLeft, Size<T> size) : topLeft(topLeft), size(size) {}
 
@@ -88,17 +88,17 @@ struct Rect
         return *this;
     }
 
-    Point<T> bottomLeft() const
+    constexpr Point<T> bottomLeft() const
     {
-        return { topLeft.x, topLeft.y + size.height - 1 };
+        return { topLeft.x, static_cast<T>(topLeft.y + size.height - 1) };
     }
 
-    Point<T> topRight() const
+    constexpr Point<T> topRight() const
     {
         return { topLeft.x + size.width - 1, topLeft.y };
     }
 
-    Point<T> bottomRight() const
+    constexpr Point<T> bottomRight() const
     {
         return topLeft + (size - Size<T> { 1, 1 });
     }
@@ -108,11 +108,11 @@ template<typename T = int>
 class Matrix2x2
 {
 public:
-    Matrix2x2(T a, T b, T c, T d) : data { a, b, c, d } {}
+    constexpr Matrix2x2(T a, T b, T c, T d) : data { a, b, c, d } {}
 
-    Point<T> operator*(Point<T> v)
+    constexpr Point<T> operator*(Point<T> v)
     {
-        return { data[0] * v.x + data[1] * v.y, data[2] * v.x + data[3] * v.y };
+        return { static_cast<T>(data[0] * v.x + data[1] * v.y), static_cast<T>(data[2] * v.x + data[3] * v.y) };
     }
 
 private:

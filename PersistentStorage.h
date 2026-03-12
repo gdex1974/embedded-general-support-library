@@ -24,7 +24,7 @@ bool operator==(const std::array<char, N> &lhs, const std::string_view &rhs)
         return false;
     }
     auto effectiveLength = rhs.size();
-    if (std::string_view(lhs.begin(), effectiveLength) != rhs)
+    if (std::string_view(std::begin(lhs), effectiveLength) != rhs)
     {
         return false;
     }

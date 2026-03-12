@@ -35,7 +35,7 @@ public:
         RTS_CTS = 3,
     };
 
-    explicit SimpleUartDevice(int uartNum) : uartNum(uartNum) {}
+    explicit SimpleUartDevice(int uartNum) : uartNum(static_cast<uart_port_t>(uartNum)) {}
     static bool init(int uartNum, int rxPin, int txPin, int baudRate,
                      DataBits dataBits = DataBits::Bits8, ParityCheck parityCheck = ParityCheck::None,
                      StopBits stopBits = StopBits::Bits1, FlowControl flowCtrl = FlowControl::Disable);

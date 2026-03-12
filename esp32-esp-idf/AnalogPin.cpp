@@ -3,13 +3,14 @@
 
 #include <esp_err.h>
 #include <soc/adc_periph.h>
-#include <driver/adc.h>
 
 #include <tuple>
+#include <optional>
+#include <esp_adc/adc_oneshot.h>
 
 namespace
 {
-std::tuple<int8_t, int8_t> digitalPinToAnalogChannel(uint8_t pin)
+constexpr std::optional<std::tuple<int, adc_channel_t>> digitalPinToAnalogChannel(uint8_t pin)
 {
     if (pin < SOC_GPIO_PIN_COUNT)
     {
@@ -19,55 +20,68 @@ std::tuple<int8_t, int8_t> digitalPinToAnalogChannel(uint8_t pin)
             {
                 if (adc_channel_io_map[i][j] == pin)
                 {
-                    return { i, j };
+                    return std::make_tuple(i, static_cast<adc_channel_t>(j));
                 }
             }
         }
     }
-    return {-1, -1 };
+    return std::nullopt;
 }
 
-int singleReadADC1(int8_t channel)
+int singleReadADC(const adc_unit_t unit, adc_channel_t channel)
 {
     int result = -1;
-    adc1_config_width(ADC_WIDTH_BIT_12);
-    if (adc1_config_channel_atten((adc1_channel_t)channel, ADC_ATTEN_DB_12) == ESP_OK)
+    adc_oneshot_unit_handle_t handle;
+    adc_oneshot_unit_init_cfg_t cfg =
     {
-        result = adc1_get_raw((adc1_channel_t)channel);
+        .unit_id = unit,
+        .clk_src = ADC_RTC_CLK_SRC_DEFAULT,
+        .ulp_mode = ADC_ULP_MODE_DISABLE,
+    };
+    if (adc_oneshot_new_unit(&cfg, &handle) == ESP_OK)
+    {
+        adc_oneshot_chan_cfg_t chanCfg =
+        {
+            .atten = ADC_ATTEN_DB_12,
+            .bitwidth = ADC_BITWIDTH_12,
+        };
+        if (adc_oneshot_config_channel(handle, channel, &chanCfg) == ESP_OK)
+        {
+            if (adc_oneshot_read(handle, channel, &result) != ESP_OK)
+            {
+                return -1;
+            }
+        }
     }
     return result;
 }
 
-int singleReadADC2(int8_t channel)
-{
-    int result = -1;
-    if (adc2_config_channel_atten((adc2_channel_t)channel, ADC_ATTEN_DB_12) == ESP_OK)
-    {
-        adc2_get_raw((adc2_channel_t)channel, ADC_WIDTH_BIT_12, &result);
-    }
-    return result;
-}
 }
 
 int embedded::AnalogPin::singleRead() const
 {
-    auto [adc, channel] = digitalPinToAnalogChannel(gpioPin.pin);
+    auto mapping = digitalPinToAnalogChannel(gpioPin.pin);
+    if (!mapping)
+    {
+        return -1;
+    }
+    const auto [adc, channel] = *mapping;
     int result = -1;
-#if __GCC_VERSION__ < 90000
+#if __GNUC__ < 9
     adc_power_acquire();
 #endif
     switch (adc)
     {
         case 0:
-            result = singleReadADC1(channel);
+            result = singleReadADC(ADC_UNIT_1, channel);
             break;
         case 1:
-            result = singleReadADC2(channel);
+            result = singleReadADC(ADC_UNIT_2, channel);
             break;
         default:
             break;
     };
-#if __GCC_VERSION__ < 90000
+#if __GNUC__ < 9
     adc_power_release();
 #endif
     return result;

@@ -8,9 +8,10 @@ namespace embedded
 
 struct I2CBus
 {
-    explicit I2CBus(int busNum) : bus(busNum) {}
+    explicit I2CBus(int busNum) : bus(static_cast<i2c_port_t>(busNum)) {}
     bool init(int sdaPin, int sclPin, uint32_t frequency, bool pullupSda = true, bool pullupScl = true) const;
     void resetBus() const;
+    bool testAddress(uint8_t address) const;
 
     i2c_port_t bus;
 };
