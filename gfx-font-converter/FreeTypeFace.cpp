@@ -15,7 +15,7 @@ void FreeTypeFace::setCharSize(FT_F26Dot6 width, FT_F26Dot6 height, int horzReso
     }
 }
 
-FreeTypeGlyph FreeTypeFace::renderGlyph(uint32_t symbol, int loadFlags, FT_Render_Mode renderMode) const
+FreeTypeGlyph FreeTypeFace::renderGlyph(const std::uint32_t symbol, const int loadFlags, const FT_Render_Mode renderMode) const
 {
     if (const auto errorCode = FT_Load_Char(ftFace.get(), symbol, loadFlags); errorCode != 0)
     {
