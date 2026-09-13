@@ -128,7 +128,7 @@ TEST(PersistentStorageTest, GetSetTest)
     const float value2 = 3.14159f;
     storage.set(key2, value2);
 
-    const std::string key3 = "key3";
+    const std::string_view key3 = "key3";
     const std::string value3 = "Hello World!";
     storage.set(key3, value3);
 

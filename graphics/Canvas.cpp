@@ -2,11 +2,11 @@
 #include "graphics/EmbeddedFont.h"
 #include <algorithm>
 
-int Canvas::drawCharAt(Point pos, const char ascii_char, const embedded::fonts::EmbeddedFont &font)
+int Canvas::drawCharAt(Point pos, uint16_t codePoint, const embedded::fonts::EmbeddedFont &font)
 {
     auto matrix = getTransformMatrix();
     auto shifts = getShifts();
-    auto glyph = font.getBitmap(ascii_char);
+    auto glyph = font.getBitmap(codePoint);
     auto ptr = glyph.bitmap.begin();
     pos.y += glyph.offset.height;
     pos.x += glyph.offset.width;

@@ -10,19 +10,28 @@ namespace embedded::fonts
 struct GlyphDescriptor
 {
     uint16_t bitmapOffset;
-    embedded::Size<uint8_t> size;
+    Size<uint8_t> size;
     uint8_t shift;
-    embedded::Size<int8_t> offset;
+    Size<int8_t> offset;
 };
+
+// A maximal contiguous range of code points that all have glyphs. Glyphs of a
+// block are stored densely, so a code point's glyph is at
+//   glyph[glyphOffset + (codePoint - firstCodepoint)].
+struct CodePointBlock
+{
+    uint16_t firstCodepoint;
+    uint16_t lastCodepoint;
+    uint16_t glyphOffset;
+};
+
 #pragma pack(pop)
 
 struct FontDescriptor
 {
     embedded::ConstBytesView bitmap;
     embedded::MemoryView<const GlyphDescriptor> glyph;
-    uint8_t first{};
-    uint8_t last{};
-    uint8_t verticalShift{};
+    embedded::MemoryView<const CodePointBlock> codePointBlocks;
 };
 
 }

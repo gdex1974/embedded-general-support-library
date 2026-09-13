@@ -11,6 +11,7 @@ if ("${COMPONENT_NAME}" STREQUAL "")
             graphics/EmbeddedFont.cpp
             graphics/EmbeddedFonts.cpp
             graphics/Canvas.cpp
+            graphics/Utf8Decoder.cpp
     )
     target_compile_features(general-support-library PUBLIC cxx_std_17)
     target_compile_options(general-support-library PRIVATE -Wall -Wextra -pedantic)
@@ -19,8 +20,7 @@ if ("${COMPONENT_NAME}" STREQUAL "")
     set_source_files_properties(graphics/EmbeddedFonts.cpp PROPERTIES COMPILE_FLAGS -Wno-missing-braces)
 
     find_package(Freetype)
-    find_package(Iconv)
-    if (FREETYPE_FOUND AND ICONV_FOUND)
+    if (FREETYPE_FOUND)
         add_subdirectory(gfx-font-converter)
     endif ()
 

@@ -17,7 +17,8 @@ TEST(EndianConversionTest, UInt32Conversion)
 
 TEST(EndianConversionTest, FloatConversion)
 {
-    union {
+    union
+    {
         float f;
         uint32_t u;
     } converter { 5.677587e-19 };
