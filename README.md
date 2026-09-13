@@ -1,4 +1,4 @@
-# General Support Library 
+# General Support Library
 
 This library contains simple entities useful in embedded development.
 
@@ -85,18 +85,22 @@ See the [Readme](graphics/Readme.md) for details.
 ## GFX Font Converter
 
 This is a console utility to convert the font from the TTF format to the GFX format used by the graphics library.
-For the 7 bit (ASCII) charset it's compatible with the Adafruit GFX library.
-For the 8 bit charset it's possible to specify the codepage to map one-byte character codes to the Unicode code points for rendering.
-The non-printable codes between 0X7E and 0XA0 are omitted to save space.
-Another difference is to create two binary files instead of C++ generated code. One for the font itself and another for the glyph metrics.
-The utility is written in C++ and uses FreeType library to render the glyphs.
-The suppported command line options are:
-- -f, --font - the path to the TTF font file
-- -s, --size - the output font size in points
-- -d, --dpi - the output font resolution in DPI, default 141
-- -e, --encoding - charset to use, default is ASCII (7-bit)
-- -b - use binary format for the font data (default is generated C++ header)
-- -o, --output - the output directory, default the executable's one.
+By default it generates a C++ header containing the glyph bitmaps, the glyph descriptors and the code point blocks.
+Fonts generated for the 7-bit (ASCII) range are compatible with the Adafruit GFX library.
+The utility is written in C++ and uses the FreeType library to render the glyphs.
+
+With the `-b` option it writes three binary files instead of a C++ header:
+`<name>Bitmaps.bin` (the packed glyph bitmaps), `<name>Glyphs.bin` (the packed `GlyphDescriptor` array)
+and `<name>CodePointBlocks.bin` (the `CodePointBlock` ranges).
+
+The supported command line options are:
+- -f FONT - the path to the TTF font file (required)
+- -o DIR - the output directory, default is the executable's directory
+- -d DPI - the font resolution in DPI, default 141
+- -s SIZE - the font size in points, default 12
+- -u CODEPOINT|RANGE - code points to include; may be repeated. Each value is a single code point (e.g. `0x41`) or a range (e.g. `0x4E00-0x4FFF`); both decimal and hexadecimal are accepted. Default `0x20-0x7E`.
+- -b - write the three binary files instead of a generated C++ header
+- -h - print the help message
 
 ## Hardware-independent interfaces
 

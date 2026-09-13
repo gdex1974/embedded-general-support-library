@@ -17,13 +17,18 @@ public:
         embedded::Size<int8_t> offset;
         uint8_t width;
     };
-    explicit EmbeddedFont(const FontDescriptor& descriptor) noexcept :
+
+    explicit EmbeddedFont(const FontDescriptor &descriptor) noexcept :
         fontDescriptor(descriptor) {}
 
-    CharacterBitmap getBitmap(char symbol) const;
+    // Returns the glyph for a BMP code point. Code points the font does not
+    // contain fall back to the first glyph in the table.
+    CharacterBitmap getBitmap(uint16_t codePoint) const;
     Rect<int> getTextBounds(std::string_view view) const;
+
 private:
-    const FontDescriptor& fontDescriptor;
+    CharacterBitmap buildBitmap(std::size_t index) const;
+    const FontDescriptor &fontDescriptor;
 };
 
 } // embedded

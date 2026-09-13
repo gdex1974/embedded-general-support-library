@@ -10,6 +10,7 @@ namespace
 
 using GFXfont = embedded::fonts::FontDescriptor;
 using GFXglyph = embedded::fonts::GlyphDescriptor;
+using GFXcodePointBlock = embedded::fonts::CodePointBlock;
 
 #include "GFXFonts/FreeSans15pt7b.h"
 // Add more fonts here
@@ -17,6 +18,6 @@ using GFXglyph = embedded::fonts::GlyphDescriptor;
 
 namespace embedded::fonts
 {
-    EmbeddedFont FreeSans15pt {FreeSans15pt7b};
-    // Add more fonts here
+EmbeddedFont FreeSans15pt {FreeSans15pt7b};
+// Add more fonts here
 }

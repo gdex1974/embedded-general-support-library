@@ -3,7 +3,7 @@
 
 namespace
 {
-    std::array<char, 128> buffer;
+std::array<char, 128> buffer;
 }
 
 using embedded::BufferedOut;
@@ -22,13 +22,15 @@ TEST(BufferedOutTest, OperatorInt)
     EXPECT_EQ(out.asStringView(), "123");
 }
 
-TEST(BufferedOutTest, OperatorLongLong) {
+TEST(BufferedOutTest, OperatorLongLong)
+{
     BufferedOut out(buffer);
     out << 123456789012345LL;
     EXPECT_EQ(out.asStringView(), "123456789012345");
 }
 
-TEST(BufferedOutTest, OperatorUnsignedLongLong) {
+TEST(BufferedOutTest, OperatorUnsignedLongLong)
+{
     BufferedOut out(buffer);
     out << 923456789012345ULL;
     EXPECT_EQ(out.asStringView(), "923456789012345");
@@ -51,7 +53,8 @@ TEST(BufferedOutTest, OperatorBytesView)
     EXPECT_EQ(std::string_view(reinterpret_cast<const char*>(result.begin()), result.size()), "0102F3");
 }
 
-TEST(BufferedOutTest, OperatorConstBytesView) {
+TEST(BufferedOutTest, OperatorConstBytesView)
+{
     BufferedOut out(buffer);
     uint8_t data[] = { 0x01, 0x02, 0xF3 };
     out << embedded::BytesView { data };
@@ -60,13 +63,15 @@ TEST(BufferedOutTest, OperatorConstBytesView) {
     EXPECT_EQ(std::string_view(reinterpret_cast<const char*>(result.begin()), result.size()), "0102F3");
 }
 
-TEST(BufferedOutTest, Width) {
+TEST(BufferedOutTest, Width)
+{
     BufferedOut out(buffer);
     out << BufferedOut::width{6} << 42 << 123;
     EXPECT_EQ(std::string(out.data().begin(), out.data().end()), "    42123");
 }
 
-TEST(BufferedOutTest, FillWidth) {
+TEST(BufferedOutTest, FillWidth)
+{
     BufferedOut out(buffer);
     out << BufferedOut::fill{'0'} << BufferedOut::width{6} << 42;
     EXPECT_EQ(std::string(out.data().begin(), out.data().end()), "000042");
@@ -76,18 +81,20 @@ TEST(BufferedOutTest, FillWidthCombined)
 {
     std::array<char, 20> string {};
     embedded::BufferedOut bufferedOut(string);
-    bufferedOut << embedded::BufferedOut::fill{'0'} << embedded::BufferedOut::width {2}
-                << 11 << ":"<< embedded::BufferedOut::width {2} << 4;
+    bufferedOut << embedded::BufferedOut::fill{'0'} << embedded::BufferedOut::width{2}
+        << 11 << ":" << embedded::BufferedOut::width{2} << 4;
     EXPECT_EQ(bufferedOut.asStringView(), "11:04");
 }
 
-TEST(BufferedOutTest, Size) {
+TEST(BufferedOutTest, Size)
+{
     BufferedOut out(buffer);
     out << "Hello";
     EXPECT_EQ(out.size(), 5);
 }
 
-TEST(BufferedOutTest, Capacity) {
+TEST(BufferedOutTest, Capacity)
+{
     BufferedOut out(buffer);
     EXPECT_EQ(out.capacity(), sizeof(buffer));
 }

@@ -21,7 +21,7 @@ FreeTypeLibrary::FreeTypeLibrary()
                     &interpreter_version);
 }
 
-FreeTypeFace FreeTypeLibrary::createFace(const std::string& fontPath, int faceIndex) const
+FreeTypeFace FreeTypeLibrary::createFace(const std::string &fontPath, int faceIndex) const
 {
     FT_Face ftFaceRaw;
     if (const auto errorCode = FT_New_Face(ftLibrary.get(), fontPath.c_str(), faceIndex, &ftFaceRaw); errorCode != 0)

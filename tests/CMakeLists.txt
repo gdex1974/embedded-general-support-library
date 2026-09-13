@@ -7,10 +7,13 @@ add_executable(tests
         EndianConversionTest.cpp
         MemoryViewTest.cpp
         PersistentStorageTest.cpp
+        FontConverterConfigTest.cpp
+        ../gfx-font-converter/FontConverterConfig.cpp
 )
 
 add_executable(graphics-tests
         BaseGeometryTest.cpp
+        EmbeddedFontTest.cpp
         MonochromeFrameBufferTest.cpp
         PBMHelper.cpp
 )

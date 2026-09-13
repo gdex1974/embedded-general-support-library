@@ -1,7 +1,10 @@
 #pragma once
 
+#include <cstdint>
+
 #include "graphics/FrameBufferBase.h"
 #include "graphics/BaseGeometry.h"
+#include "graphics/Utf8Decoder.h"
 #include "MemoryView.h"
 
 namespace embedded::fonts
@@ -59,12 +62,13 @@ public:
         setIfVisible(transformCoords(pos));
     }
 
-    int drawCharAt(Point pos, char ascii_char, const embedded::fonts::EmbeddedFont &font);
+    int drawCharAt(Point pos, uint16_t codePoint, const embedded::fonts::EmbeddedFont &font);
     void drawStringAt(Point topLeft, std::string_view text, const embedded::fonts::EmbeddedFont &font)
     {
-        for (auto symbol: text)
+        embedded::Utf8Decoder decoder(text);
+        while (auto codePoint = decoder.next())
         {
-            topLeft.x += drawCharAt(topLeft, symbol, font);
+            topLeft.x += drawCharAt(topLeft, *codePoint, font);
         }
     }
 

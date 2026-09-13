@@ -337,8 +337,13 @@ const GFXglyph FreeSans15pt7bGlyphs[] = {
   {  2847, {   6,  27 },  10, {    3,  -20 } },   // 0x7D '}'
   {  2868, {  12,   5 },  14, {    1,  -12 } } }; // 0x7E '~'
 
+const GFXcodePointBlock FreeSans15pt7bCodePointBlocks[] = {
+  { 0x20, 0x7E, 0 }
+};
+
 const GFXfont FreeSans15pt7b = {
   FreeSans15pt7bBitmaps,
   FreeSans15pt7bGlyphs,
-  0x20, 0x7E, 35 };
+  FreeSans15pt7bCodePointBlocks
+  };
 
