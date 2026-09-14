@@ -22,8 +22,8 @@ uint16_t PacketUart::ReceiveUntil(uint8_t* buffer, uint16_t bufferSize, uint8_t 
     uint16_t currentPos = 0;
     auto startTime = embedded::getMillisecondTicks();
     auto maxTime = startTime + timeoutMilliseconds;
-    while ( currentPos < bufferSize
-            && (timeoutMilliseconds == 0 || (startTime = embedded::getMillisecondTicks()) < maxTime))
+    while (currentPos < bufferSize
+        && (timeoutMilliseconds == 0 || (startTime = embedded::getMillisecondTicks()) < maxTime))
     {
         if (uartDevice.receiveBlocking(buffer + currentPos, 1, maxTime - startTime) == 1)
         {
@@ -50,7 +50,7 @@ uint16_t PacketUart::ReceiveBetween(uint8_t* buffer,
     auto maxTime = startTime + timeoutMilliseconds;
     while (startTime <= maxTime)
     {
-        if(uartDevice.receiveBlocking(buffer + currentPos, 1, maxTime - startTime) == 1)
+        if (uartDevice.receiveBlocking(buffer + currentPos, 1, maxTime - startTime) == 1)
         {
             if (buffer[currentPos] == startByte)
                 break;
@@ -65,7 +65,7 @@ uint16_t PacketUart::ReceiveBetween(uint8_t* buffer,
     {
         if (currentPos == bufferSize)
             break;
-        if(uartDevice.receiveBlocking(buffer + currentPos, 1, maxTime - startTime) == 1)
+        if (uartDevice.receiveBlocking(buffer + currentPos, 1, maxTime - startTime) == 1)
         {
             if (buffer[currentPos++] == endByte)
                 break;
