@@ -6,13 +6,13 @@
 #include <driver/spi_master.h>
 #include <algorithm>
 
-bool embedded::SpiBus::transfer(const uint8_t *sendBytes, uint8_t *receiveBytes, uint32_t length)
+bool embedded::SpiBus::transfer(const uint8_t* sendBytes, uint8_t* receiveBytes, uint32_t length)
 {
     spi_transaction_t transaction{};
-    transaction.user= nullptr;
+    transaction.user = nullptr;
     while (length > 0)
     {
-        const auto effectiveLength = std::min(length , maxTransferSize);
+        const auto effectiveLength = std::min(length, maxTransferSize);
         if (sendBytes != nullptr)
         {
             transaction.tx_buffer = sendBytes;
@@ -48,7 +48,7 @@ bool embedded::SpiBus::init(embedded::GpioPinDefinition &sck,
                             embedded::SpiBus::DuplexMode duplexMode)
 {
     maxTransferSize = LLDESC_MAX_NUM_PER_DESC;
-    spi_bus_config_t buscfg={};
+    spi_bus_config_t buscfg = {};
     buscfg.mosi_io_num = mosi.pin;
     buscfg.miso_io_num = miso.pin;
     buscfg.sclk_io_num = sck.pin;
@@ -62,11 +62,11 @@ bool embedded::SpiBus::init(embedded::GpioPinDefinition &sck,
         return false;
     }
 
-    spi_device_interface_config_t devcfg={};
-    devcfg.mode=0;
-    devcfg.clock_speed_hz=static_cast<int>(frequency);
-    devcfg.spics_io_num=-1;
-    devcfg.queue_size=7;
+    spi_device_interface_config_t devcfg = {};
+    devcfg.mode = 0;
+    devcfg.clock_speed_hz = static_cast<int>(frequency);
+    devcfg.spics_io_num = -1;
+    devcfg.queue_size = 7;
     if (duplexMode == DuplexMode::Half)
     {
         devcfg.flags |= SPI_DEVICE_HALFDUPLEX;

@@ -53,8 +53,8 @@ std::optional<uint16_t> embedded::Utf8Decoder::next()
         // Ignore malformed sequences, non-BPM code points and surrogates (U+D800 - U+DFFF)
         if (continuationBytes == 0
             && result >= firstCodePoint
-            && result <= std::min(lastCodePoint, 0xFFFFu)
-            && !(result >= 0xD800 && result <= 0xDFFF))
+            && result <= std::min(lastCodePoint, static_cast<uint32_t>(0xFFFFu))
+            && (result < 0xD800 || result > 0xDFFF))
         {
             return result;
         }

@@ -36,6 +36,7 @@ else ()
             graphics/EmbeddedFont.cpp
             graphics/EmbeddedFonts.cpp
             graphics/Canvas.cpp
+            graphics/Utf8Decoder.cpp
             esp32-esp-idf/AnalogPin.cpp
             esp32-esp-idf/Delays.cpp
             esp32-esp-idf/GpioDigitalPin.cpp
